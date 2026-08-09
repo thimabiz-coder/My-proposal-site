@@ -289,23 +289,33 @@
     </div>
 
     <script>
-        // ==================== වීඩියෝ එක ඉවර වූ සැනින් Next Step එකට යාමට:==================== 
-const video = document.getElementById('myVideo');
-
-if (video) {
-    video.addEventListener('ended', function() {
-        nextStep(5); // Video එක ඉවර වූ පසු Step 5 එකට යයි
-    });
-}
-        function nextStep(stepNumber) {
+        // Updated nextStep function
+function nextStep(stepNumber) {
     playClickSound();
     
     document.querySelectorAll('.step').forEach(step => {
         step.classList.remove('active');
     });
     
-    const nextStepEl = document.getElementById('step' + stepNumber);
-    nextStepEl.classList.add('active');
+    document.getElementById('step' + stepNumber).classList.add('active');
+
+    // Automatically play video when Step 4 opens
+    if (stepNumber === 4) {
+        const video = document.querySelector('#step4 video');
+        if (video) {
+            video.currentTime = 0;
+            video.play().catch(e => console.log("Autoplay error:", e));
+        }
+    }
+}
+
+// Automatically go to Step 5 when video finishes playing
+const proposalVideo = document.querySelector('#step4 video');
+if (proposalVideo) {
+    proposalVideo.addEventListener('ended', function() {
+        nextStep(5);
+    });
+}
 
     // Step 4 (Video) එකට ආ විට Video එක automatic play කිරීම
     if (stepNumber === 4) {
