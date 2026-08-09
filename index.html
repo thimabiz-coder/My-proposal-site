@@ -127,7 +127,7 @@
             font-weight: 600;
             border-radius: 100px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
             margin: 5px;
             box-shadow: 0 8px 20px var(--primary-glow);
             display: inline-flex;
@@ -210,14 +210,14 @@
             backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             z-index: 100;
+            transition: left 0.2s ease, top 0.2s ease;
         }
     </style>
 </head>
 <body>
 
-    <!-- ==================== HIGHLIGHT: BUBBLE POP AUDIO ==================== -->
+    <!-- Bubble Pop Audio Effect -->
     <audio id="bubblePopSound" src="bubble_pop.mp3" preload="auto"></audio>
-    <!-- =================================================================== -->
 
     <div class="bg-hearts" id="bgHearts"></div>
 
@@ -252,12 +252,12 @@
         <!-- Step 4: Video Section -->
         <div class="step" id="step4">
             <p style="margin-bottom: 10px;">❤️ A little moment for us ❤️</p>
-           <div class="video-wrapper">
-        <video id="myVideo" controls autoplay muted playsinline>
-        <source src="video.mp4" type="video/mp4">
-        Your browser does not support video.
-        </video>
-     </div>
+            <div class="video-wrapper">
+                <video id="myVideo" controls playsinline muted>
+                    <source src="video.mp4" type="video/mp4">
+                    Your browser does not support video.
+                </video>
+            </div>
             <p>Watch till the end, then continue 🌹</p>
             <button class="btn" onclick="nextStep(5)">Next Step ➡️</button>
         </div>
@@ -275,7 +275,7 @@
             <h2>Will You Be Mine? ❤️</h2>
             <div class="yes-no-buttons">
                 <button class="btn" onclick="celebrate()">YES! 💖</button>
-                <button class="btn" id="noBtn" onmouseover="moveNoButton()" onclick="moveNoButton()">NO 😜</button>
+                <button class="btn" id="noBtn" onmouseover="moveNoButton()" ontouchstart="moveNoButton()" onclick="moveNoButton()">NO 😜</button>
             </div>
         </div>
 
@@ -289,53 +289,68 @@
     </div>
 
     <script>
-        // Updated nextStep function
-function nextStep(stepNumber) {
-    playClickSound();
-    
-    document.querySelectorAll('.step').forEach(step => {
-        step.classList.remove('active');
-    });
-    
-    document.getElementById('step' + stepNumber).classList.add('active');
+        // DOM Initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            // Generate background floating hearts
+            const bgHearts = document.getElementById('bgHearts');
+            const heartEmojis = ['💖', '✨', '🌸', '💕', '❤️'];
+            
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('bg-heart');
+                heart.innerText = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 4 + 6) + 's';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                bgHearts.appendChild(heart);
+            }
 
-    // Automatically play video when Step 4 opens
-    if (stepNumber === 4) {
-        const video = document.querySelector('#step4 video');
-        if (video) {
-            video.currentTime = 0;
-            video.play().catch(e => console.log("Autoplay error:", e));
+            // Auto-advance to Step 5 when video ends
+            const proposalVideo = document.getElementById('myVideo');
+            if (proposalVideo) {
+                proposalVideo.addEventListener('ended', () => {
+                    nextStep(5);
+                });
+            }
+        });
+
+        // Navigation between steps
+        function nextStep(stepNumber) {
+            playClickSound();
+
+            // Hide all steps
+            document.querySelectorAll('.step').forEach(step => {
+                step.classList.remove('active');
+            });
+
+            // Activate current step
+            const currentStep = document.getElementById('step' + stepNumber);
+            if (currentStep) {
+                currentStep.classList.add('active');
+            }
+
+            // Video logic for Step 4
+            const video = document.getElementById('myVideo');
+            if (video) {
+                if (stepNumber === 4) {
+                    video.currentTime = 0;
+                    video.play().catch(e => console.log("Autoplay blocked or failed:", e));
+                } else {
+                    video.pause();
+                }
+            }
         }
-    }
-}
 
-// Automatically go to Step 5 when video finishes playing
-const proposalVideo = document.querySelector('#step4 video');
-if (proposalVideo) {
-    proposalVideo.addEventListener('ended', function() {
-        nextStep(5);
-    });
-}
-
-    // Step 4 (Video) එකට ආ විට Video එක automatic play කිරීම
-    if (stepNumber === 4) {
-        const video = document.getElementById('myVideo');
-        if (video) {
-            video.currentTime = 0;
-            video.play().catch(e => console.log("Autoplay error:", e));
-        }
-    }
-}
-        // ==================== HIGHLIGHT: PLAY BUBBLE POP SOUND ====================
+        // Play Bubble Pop Sound Effect
         function playClickSound() {
             const sound = document.getElementById('bubblePopSound');
             if (sound) {
-                sound.currentTime = 0; // Allows quick repeated popping
+                sound.currentTime = 0;
                 sound.play().catch(e => console.log('Sound play error:', e));
             }
         }
 
-        // Celebration Sound Effect for YES!
+        // Celebration Web Audio Synthesizer
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         let audioCtx = null;
 
@@ -362,62 +377,43 @@ if (proposalVideo) {
                 osc.stop(startTime + 0.6);
             });
         }
-        // =========================================================================
 
-        // Generate background floating hearts
-        const bgHearts = document.getElementById('bgHearts');
-        const heartEmojis = ['💖', '✨', '🌸', '💕', '❤️'];
-        
-        for (let i = 0; i < 15; i++) {
-            const heart = document.createElement('div');
-            heart.classList.add('bg-heart');
-            heart.innerText = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 4 + 6) + 's';
-            heart.style.animationDelay = Math.random() * 5 + 's';
-            bgHearts.appendChild(heart);
-        }
-
-        function nextStep(stepNumber) {
-            playClickSound(); // HIGHLIGHT: Triggers bubble_pop sound on click
-            document.querySelectorAll('.step').forEach(step => {
-                step.classList.remove('active');
-            });
-            document.getElementById('step' + stepNumber).classList.add('active');
-        }
-
+        // Update Trust Range Meter
         function updateTrust(val) {
             document.getElementById('trustVal').innerText = val;
         }
 
+        // Move NO button away smoothly
         function moveNoButton() {
-            playClickSound(); // HIGHLIGHT: Triggers bubble_pop sound on dodge
+            playClickSound();
             const noBtn = document.getElementById('noBtn');
-            const x = Math.random() * (window.innerWidth - 120);
-            const y = Math.random() * (window.innerHeight - 60);
+            const padding = 20;
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - (padding * 2)) + padding;
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - (padding * 2)) + padding;
+            
             noBtn.style.position = 'fixed';
             noBtn.style.left = x + 'px';
             noBtn.style.top = y + 'px';
         }
 
+        // Celebration Logic
         function celebrate() {
-            playClickSound(); // Plays pop sound on click
-            playCelebrationSound(); // Plays celebratory chime
+            playClickSound();
+            playCelebrationSound();
 
-            // Smoothly change background gradient to warm celebration colors
             document.body.classList.add('celebrate-bg');
-
-            // Move to Step 7
             nextStep(7);
-            
-            // Fire Confetti explosion
+
+            // Trigger Confetti
             var count = 200;
             var defaults = { origin: { y: 0.7 } };
 
             function fire(particleRatio, opts) {
-                confetti(Object.assign({}, defaults, opts, {
-                    particleCount: Math.floor(count * particleRatio)
-                }));
+                if (typeof confetti === 'function') {
+                    confetti(Object.assign({}, defaults, opts, {
+                        particleCount: Math.floor(count * particleRatio)
+                    }));
+                }
             }
 
             fire(0.25, { spread: 26, startVelocity: 55 });
