@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Special Proposal ❤️</title>
-    <!-- Google Fonts for modern GenZ typography -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
     <!-- Canvas Confetti Library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -36,9 +36,14 @@
             overflow: hidden;
             position: relative;
             color: var(--text-main);
+            transition: background 1.2s ease-in-out;
         }
 
-        /* Floating background elements */
+        /* Celebration Background Color when YES is clicked */
+        body.celebrate-bg {
+            background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%) !important;
+        }
+
         .bg-hearts {
             position: absolute;
             width: 100%;
@@ -62,7 +67,6 @@
             100% { transform: translateY(-110vh) rotate(360deg) scale(1.2); opacity: 0; }
         }
 
-        /* Main Container - Glassmorphism */
         .container {
             width: 90%;
             max-width: 420px;
@@ -114,7 +118,6 @@
             font-weight: 400;
         }
 
-        /* Modernized Buttons */
         .btn {
             background: linear-gradient(135deg, #ff2a5f 0%, #ff5e84 100%);
             color: white;
@@ -138,11 +141,6 @@
             box-shadow: 0 12px 25px rgba(255, 42, 95, 0.6);
         }
 
-        .btn:active {
-            transform: translateY(0) scale(0.98);
-        }
-
-        /* Emojis & Visual Elements */
         .emoji-icon {
             font-size: 65px;
             margin-bottom: 20px;
@@ -156,7 +154,6 @@
             50% { transform: scale(1.1); }
         }
 
-        /* Styled Range Input */
         .range-wrapper {
             background: rgba(255, 255, 255, 0.05);
             padding: 20px;
@@ -182,7 +179,6 @@
             color: #ff6b8b;
         }
 
-        /* Video Frame */
         .video-wrapper {
             position: relative;
             border-radius: 20px;
@@ -219,7 +215,6 @@
 </head>
 <body>
 
-    <!-- Ambient Floating Background Hearts -->
     <div class="bg-hearts" id="bgHearts"></div>
 
     <div class="container">
@@ -254,8 +249,8 @@
         <div class="step" id="step4">
             <p style="margin-bottom: 10px;">❤️ A little moment for us ❤️</p>
             <div class="video-wrapper">
-                <video controls autoplay muted loop>
-                    <source src="your-vdo.mp4" type="video/mp4">
+                <video controls autoplay muted loop playsinline>
+                    <source src="my-video.mp4" type="video/mp4">
                     Your browser does not support video.
                 </video>
             </div>
@@ -290,7 +285,6 @@
     </div>
 
     <script>
-        // Web Audio API Engine for zero-dependency sound effects
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         let audioCtx = null;
 
@@ -300,7 +294,6 @@
             }
         }
 
-        // Play soft romantic tap sound for step buttons
         function playClickSound() {
             initAudio();
             if (audioCtx.state === 'suspended') {
@@ -311,8 +304,8 @@
             const gain = audioCtx.createGain();
 
             osc.type = 'sine';
-            osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5 note
-            osc.frequency.exponentialRampToValueAtTime(659.25, audioCtx.currentTime + 0.08); // E5 note
+            osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(659.25, audioCtx.currentTime + 0.08);
 
             gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
@@ -324,14 +317,13 @@
             osc.stop(audioCtx.currentTime + 0.12);
         }
 
-        // Play magical romantic chime for the proposal YES
         function playCelebrationSound() {
             initAudio();
             if (audioCtx.state === 'suspended') {
                 audioCtx.resume();
             }
 
-            const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51]; // C5, E5, G5, C6, E6
+            const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51];
             notes.forEach((freq, index) => {
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
@@ -351,7 +343,7 @@
             });
         }
 
-        // Generate floating background hearts dynamically
+        // Generate background floating hearts
         const bgHearts = document.getElementById('bgHearts');
         const heartEmojis = ['💖', '✨', '🌸', '💕', '❤️'];
         
@@ -388,10 +380,16 @@
         }
 
         function celebrate() {
+            // 1. Play chime audio
             playCelebrationSound();
+
+            // 2. Change background color smoothly
+            document.body.classList.add('celebrate-bg');
+
+            // 3. Move to celebration screen
             nextStep(7);
             
-            // Confetti effect on saying YES
+            // 4. Fire Confetti
             var count = 200;
             var defaults = { origin: { y: 0.7 } };
 
