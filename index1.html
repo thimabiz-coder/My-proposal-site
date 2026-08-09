@@ -215,6 +215,10 @@
 </head>
 <body>
 
+    <!-- ==================== HIGHLIGHT: BUBBLE POP AUDIO ==================== -->
+    <audio id="bubblePopSound" src="bubble_pop.mp3" preload="auto"></audio>
+    <!-- =================================================================== -->
+
     <div class="bg-hearts" id="bgHearts"></div>
 
     <div class="container">
@@ -285,43 +289,22 @@
     </div>
 
     <script>
+        // ==================== HIGHLIGHT: PLAY BUBBLE POP SOUND ====================
+        function playClickSound() {
+            const sound = document.getElementById('bubblePopSound');
+            if (sound) {
+                sound.currentTime = 0; // Allows quick repeated popping
+                sound.play().catch(e => console.log('Sound play error:', e));
+            }
+        }
+
+        // Celebration Sound Effect for YES!
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         let audioCtx = null;
 
-        function initAudio() {
-            if (!audioCtx) {
-                audioCtx = new AudioContext();
-            }
-        }
-
-        function playClickSound() {
-            initAudio();
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
-
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(659.25, audioCtx.currentTime + 0.08);
-
-            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
-
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.12);
-        }
-
         function playCelebrationSound() {
-            initAudio();
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
+            if (!audioCtx) audioCtx = new AudioContext();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
 
             const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51];
             notes.forEach((freq, index) => {
@@ -342,6 +325,7 @@
                 osc.stop(startTime + 0.6);
             });
         }
+        // =========================================================================
 
         // Generate background floating hearts
         const bgHearts = document.getElementById('bgHearts');
@@ -358,7 +342,7 @@
         }
 
         function nextStep(stepNumber) {
-            playClickSound();
+            playClickSound(); // HIGHLIGHT: Triggers bubble_pop sound on click
             document.querySelectorAll('.step').forEach(step => {
                 step.classList.remove('active');
             });
@@ -370,7 +354,7 @@
         }
 
         function moveNoButton() {
-            playClickSound();
+            playClickSound(); // HIGHLIGHT: Triggers bubble_pop sound on dodge
             const noBtn = document.getElementById('noBtn');
             const x = Math.random() * (window.innerWidth - 120);
             const y = Math.random() * (window.innerHeight - 60);
@@ -380,16 +364,16 @@
         }
 
         function celebrate() {
-            // 1. Play chime audio
-            playCelebrationSound();
+            playClickSound(); // Plays pop sound on click
+            playCelebrationSound(); // Plays celebratory chime
 
-            // 2. Change background color smoothly
+            // Smoothly change background gradient to warm celebration colors
             document.body.classList.add('celebrate-bg');
 
-            // 3. Move to celebration screen
+            // Move to Step 7
             nextStep(7);
             
-            // 4. Fire Confetti
+            // Fire Confetti explosion
             var count = 200;
             var defaults = { origin: { y: 0.7 } };
 
