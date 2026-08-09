@@ -3,16 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Special Proposal ❤️</title>
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
-    <!-- Canvas Confetti Library -->
+
+    <!-- Canvas Confetti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
     <style>
+
         :root {
             --primary: #ff2a5f;
             --primary-glow: rgba(255, 42, 95, 0.4);
-            --bg-gradient: linear-gradient(135deg, #0f0c1b 0%, #800080 50%, #ff2a8f 100%);
+            --bg-gradient: linear-gradient(
+                135deg,
+                #0f0c1b 0%,
+                #800080 50%,
+                #ff2a8f 100%
+            );
+
             --glass-bg: rgba(255, 255, 255, 0.07);
             --glass-border: rgba(255, 255, 255, 0.15);
             --text-main: #ffffff;
@@ -23,416 +34,1501 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+
             font-family: 'Plus Jakarta Sans', sans-serif;
+
             -webkit-tap-highlight-color: transparent;
         }
 
         body {
+
             background: var(--bg-gradient);
+
             display: flex;
             justify-content: center;
             align-items: center;
+
             min-height: 100vh;
+
             overflow: hidden;
+
             position: relative;
+
             color: var(--text-main);
+
             transition: background 1.2s ease-in-out;
         }
 
-        /* Celebration Background Color when YES is clicked */
         body.celebrate-bg {
-            background: linear-gradient(135deg, #ff416c 0%, #33ccff 50%, #ff99cc100%) !important;
+
+            background: linear-gradient(
+                135deg,
+                #ff416c 0%,
+                #33ccff 50%,
+                #ff99cc 100%
+            ) !important;
         }
 
+        /* Floating Hearts */
+
         .bg-hearts {
+
             position: absolute;
+
             width: 100%;
             height: 100%;
+
             overflow: hidden;
+
             z-index: 0;
+
             pointer-events: none;
         }
 
         .bg-heart {
+
             position: absolute;
+
             color: rgba(255, 42, 95, 0.15);
+
             font-size: 24px;
+
             animation: floatUp 8s infinite linear;
+
             bottom: -50px;
         }
 
         @keyframes floatUp {
-            0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
-            20% { opacity: 0.8; }
-            100% { transform: translateY(-110vh) rotate(360deg) scale(1.2); opacity: 0; }
+
+            0% {
+                transform:
+                    translateY(0)
+                    rotate(0deg)
+                    scale(0.8);
+
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 0.8;
+            }
+
+            100% {
+
+                transform:
+                    translateY(-110vh)
+                    rotate(360deg)
+                    scale(1.2);
+
+                opacity: 0;
+            }
         }
 
+        /* Main Container */
+
         .container {
+
             width: 90%;
+
             max-width: 420px;
+
             background: var(--glass-bg);
+
             backdrop-filter: blur(20px);
+
             -webkit-backdrop-filter: blur(20px);
+
             border: 1px solid var(--glass-border);
+
             padding: 35px 25px;
+
             border-radius: 30px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4),
-                        0 0 40px rgba(255, 42, 95, 0.15);
+
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.4),
+                0 0 40px rgba(255, 42, 95, 0.15);
+
             text-align: center;
+
             z-index: 10;
+
             position: relative;
         }
+
+        /* Steps */
 
         .step {
             display: none;
         }
 
         .step.active {
+
             display: block;
-            animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+
+            animation:
+                slideUpFade
+                0.6s
+                cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         @keyframes slideUpFade {
-            from { opacity: 0; transform: translateY(20px) scale(0.96); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+
+            from {
+                opacity: 0;
+                transform:
+                    translateY(20px)
+                    scale(0.96);
+            }
+
+            to {
+                opacity: 1;
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
         }
 
-        h1, h2 {
+        /* Headings */
+
+        h1,
+        h2 {
+
             font-family: 'Outfit', sans-serif;
+
             font-weight: 700;
-            background: linear-gradient(45deg, #ff6b8b, #ff2a5f, #ff8da1);
+
+            background:
+                linear-gradient(
+                    45deg,
+                    #ff6b8b,
+                    #ff2a5f,
+                    #ff8da1
+                );
+
             -webkit-background-clip: text;
+
             -webkit-text-fill-color: transparent;
+
             margin-bottom: 15px;
+
             letter-spacing: -0.5px;
         }
 
-        h1 { font-size: 1.8rem; }
-        h2 { font-size: 2rem; }
+        h1 {
+            font-size: 1.8rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+        }
 
         p {
+
             color: var(--text-sub);
+
             font-size: 1rem;
+
             line-height: 1.6;
+
             margin-bottom: 25px;
+
             font-weight: 400;
         }
 
+        /* Buttons */
+
         .btn {
-            background: linear-gradient(135deg, #ff2a5f 0%, #ff5e84 100%);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff2a5f 0%,
+                    #ff5e84 100%
+                );
+
             color: white;
+
             border: none;
+
             padding: 14px 32px;
+
             font-size: 1rem;
+
             font-weight: 600;
+
             border-radius: 100px;
+
             cursor: pointer;
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+
+            transition:
+                transform 0.3s
+                cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.3s ease;
+
             margin: 5px;
-            box-shadow: 0 8px 20px var(--primary-glow);
+
+            box-shadow:
+                0 8px 20px var(--primary-glow);
+
             display: inline-flex;
+
             align-items: center;
+
             justify-content: center;
+
             gap: 8px;
         }
 
         .btn:hover {
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 12px 25px rgba(255, 42, 95, 0.6);
+
+            transform:
+                translateY(-3px)
+                scale(1.03);
+
+            box-shadow:
+                0 12px 25px
+                rgba(255, 42, 95, 0.6);
         }
 
+        /* Emoji */
+
         .emoji-icon {
+
             font-size: 65px;
+
             margin-bottom: 20px;
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
-            animation: pulse 2s infinite ease-in-out;
+
+            filter:
+                drop-shadow(
+                    0 10px 15px
+                    rgba(0,0,0,0.3)
+                );
+
+            animation:
+                pulse
+                2s infinite
+                ease-in-out;
+
             display: inline-block;
         }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
         }
 
+        /* Name Input */
+
+        .name-input {
+
+            width: 100%;
+
+            padding: 15px 20px;
+
+            border-radius: 50px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.2);
+
+            background:
+                rgba(255,255,255,0.1);
+
+            color: white;
+
+            outline: none;
+
+            text-align: center;
+
+            font-size: 1rem;
+
+            margin-bottom: 15px;
+
+            transition: 0.3s;
+        }
+
+        .name-input::placeholder {
+            color: #e2c0db;
+        }
+
+        .name-input:focus {
+
+            border-color: #ff5e84;
+
+            box-shadow:
+                0 0 15px
+                rgba(255,42,95,0.3);
+        }
+
+        /* Range */
+
         .range-wrapper {
-            background: rgba(255, 255, 255, 0.05);
+
+            background:
+                rgba(255, 255, 255, 0.05);
+
             padding: 20px;
+
             border-radius: 20px;
+
             margin-bottom: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.05);
         }
 
         input[type="range"] {
+
             width: 100%;
+
             height: 8px;
+
             border-radius: 5px;
-            background: rgba(255, 255, 255, 0.2);
+
+            background:
+                rgba(255, 255, 255, 0.2);
+
             outline: none;
+
             accent-color: #ff2a5f;
+
             cursor: pointer;
+
             margin: 15px 0;
         }
 
         .trust-badge {
+
             font-size: 1.5rem;
+
             font-weight: 700;
+
             color: #ff6b8b;
         }
 
+        /* Video */
+
         .video-wrapper {
+
             position: relative;
+
             border-radius: 20px;
+
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+
+            box-shadow:
+                0 10px 30px
+                rgba(0,0,0,0.5);
+
             margin-bottom: 20px;
-            border: 1px solid var(--glass-border);
+
+            border:
+                1px solid
+                var(--glass-border);
         }
 
         video {
+
             width: 100%;
+
             display: block;
         }
 
+        /* YES / NO */
+
         .yes-no-buttons {
+
             display: flex;
+
             justify-content: center;
+
             align-items: center;
+
             gap: 15px;
+
             position: relative;
+
             min-height: 50px;
+
             margin-top: 10px;
         }
 
         #noBtn {
-            background: rgba(255, 255, 255, 0.1);
+
+            background:
+                rgba(255, 255, 255, 0.1);
+
             color: #ccc;
+
             box-shadow: none;
+
             backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.1);
+
             z-index: 100;
-            transition: left 0.2s ease, top 0.2s ease;
+
+            transition:
+                left 0.2s ease,
+                top 0.2s ease;
         }
+
+        /* Success Message */
+
+        .success-name {
+
+            color: white;
+
+            font-size: 1.2rem;
+
+            margin-bottom: 15px;
+
+            font-weight: 600;
+        }
+
     </style>
+
 </head>
+
 <body>
 
-    <!-- Bubble Pop Audio Effect -->
-    <audio id="bubblePopSound" src="bubble_pop.mp3" preload="auto"></audio>
+    <!-- Bubble Pop Sound -->
+    <audio
+        id="bubblePopSound"
+        src="bubble_pop.mp3"
+        preload="auto">
+    </audio>
 
-    <div class="bg-hearts" id="bgHearts"></div>
+    <!-- Background Hearts -->
+    <div
+        class="bg-hearts"
+        id="bgHearts">
+    </div>
+
 
     <div class="container">
-        
-        <!-- Step 1: Intro -->
-        <div class="step active" id="step1">
-            <div class="emoji-icon">✨</div>
-            <h1>හේයි... ❤️</h1>
-            <p>"මට ඔයාට කියන්න පුංචි දෙයක් තියෙනවා... මේක අන්තිම වෙනකන් බලන්න Promise වෙන්න. 🥺"</p>
-            <button class="btn" onclick="nextStep(2)">Promise! 💖</button>
+
+
+        <!-- ================================= -->
+        <!-- STEP 1 - NAME -->
+        <!-- ================================= -->
+
+        <div
+            class="step active"
+            id="step1">
+
+            <div class="emoji-icon">
+                ✨
+            </div>
+
+            <h1>
+                හේයි... ❤️
+            </h1>
+
+            <p>
+                මුලින්ම ඔයාගේ නම කියන්නකෝ... 🥺❤️
+            </p>
+
+            <input
+                type="text"
+                id="personName"
+                class="name-input"
+                placeholder="ඔයාගේ නම..."
+                maxlength="30"
+                autocomplete="off"
+            >
+
+            <button
+                class="btn"
+                onclick="startProposal()">
+
+                Continue 💖
+
+            </button>
+
         </div>
 
-        <!-- Step 2: Teddy Hug -->
-        <div class="step" id="step2">
-            <div class="emoji-icon">🧸</div>
-            <p>Before we continue...<br>මුලින්ම මේ Teddy ට Hug එකක් දෙන්න.</p>
-            <button class="btn" onclick="nextStep(3)">Give Hug 🧸💞</button>
+
+        <!-- ================================= -->
+        <!-- STEP 2 - INTRO -->
+        <!-- ================================= -->
+
+        <div
+            class="step"
+            id="step2">
+
+            <div class="emoji-icon">
+                💖
+            </div>
+
+            <h1>
+                හේයි... ❤️
+            </h1>
+
+            <p>
+                "මට ඔයාට කියන්න පුංචි දෙයක් තියෙනවා...
+                මේක අන්තිම වෙනකන් බලන්න
+                Promise වෙන්න. 🥺"
+            </p>
+
+            <button
+                class="btn"
+                onclick="nextStep(3)">
+
+                Promise! 💖
+
+            </button>
+
         </div>
 
-        <!-- Step 3: Trust Meter -->
-        <div class="step" id="step3">
-            <div class="emoji-icon">🔒💗</div>
-            <p>ඔයා මාව කොච්චර විශ්වාස කරනවද කියලා මේකෙන් පෙන්වන්න.</p>
+
+        <!-- ================================= -->
+        <!-- STEP 3 - TEDDY -->
+        <!-- ================================= -->
+
+        <div
+            class="step"
+            id="step3">
+
+            <div class="emoji-icon">
+                🧸
+            </div>
+
+            <p>
+
+                Before we continue...
+                <br>
+
+                මුලින්ම මේ Teddy ට
+                Hug එකක් දෙන්න.
+
+            </p>
+
+            <button
+                class="btn"
+                onclick="nextStep(4)">
+
+                Give Hug 🧸💞
+
+            </button>
+
+        </div>
+
+
+        <!-- ================================= -->
+        <!-- STEP 4 - TRUST -->
+        <!-- ================================= -->
+
+        <div
+            class="step"
+            id="step4">
+
+            <div class="emoji-icon">
+                🔒💗
+            </div>
+
+            <p>
+
+                ඔයා මාව කොච්චර
+                විශ්වාස කරනවද කියලා
+                මේකෙන් පෙන්වන්න.
+
+            </p>
+
+
             <div class="range-wrapper">
-                <input type="range" id="trustRange" min="0" max="100" value="50" oninput="updateTrust(this.value)">
-                <div class="trust-badge"><span id="trustVal">50</span>%</div>
+
+                <input
+                    type="range"
+                    id="trustRange"
+                    min="0"
+                    max="100"
+                    value="50"
+                    oninput="updateTrust(this.value)"
+                >
+
+                <div class="trust-badge">
+
+                    <span id="trustVal">
+                        50
+                    </span>%
+
+                </div>
+
             </div>
-            <button class="btn" onclick="nextStep(4)">Continue ✨</button>
+
+
+            <button
+                class="btn"
+                onclick="nextStep(5)">
+
+                Continue ✨
+
+            </button>
+
         </div>
 
-        <!-- Step 4: Video Section -->
-        <div class="step" id="step4">
-            <p style="margin-bottom: 10px;">❤️ A little moment for us ❤️</p>
+
+        <!-- ================================= -->
+        <!-- STEP 5 - VIDEO -->
+        <!-- ================================= -->
+
+        <div
+            class="step"
+            id="step5">
+
+            <p style="margin-bottom: 10px;">
+
+                ❤️ A little moment for us ❤️
+
+            </p>
+
+
             <div class="video-wrapper">
-                <video id="myVideo" controls playsinline muted>
-                    <source src="video.mp4" type="video/mp4">
+
+                <video
+                    id="myVideo"
+                    controls
+                    playsinline
+                    muted>
+
+                    <source
+                        src="video.mp4"
+                        type="video/mp4">
+
                     Your browser does not support video.
+
                 </video>
+
             </div>
-            <p>Watch till the end, then continue 🌹</p>
-            <button class="btn" onclick="nextStep(5)">Next Step ➡️</button>
+
+
+            <p>
+
+                Watch till the end,
+                then continue 🌹
+
+            </p>
+
+
+            <button
+                class="btn"
+                onclick="nextStep(6)">
+
+                Next Step ➡️
+
+            </button>
+
         </div>
 
-        <!-- Step 5: Love Message -->
-        <div class="step" id="step5">
-            <div class="emoji-icon">💌</div>
-            <p>"My dearest... you are my everything."</p>
-            <button class="btn" onclick="nextStep(6)">One Last Question... ✨</button>
+
+        <!-- ================================= -->
+        <!-- STEP 6 - LOVE MESSAGE -->
+        <!-- ================================= -->
+
+        <div
+            class="step"
+            id="step6">
+
+            <div class="emoji-icon">
+                💌
+            </div>
+
+            <p>
+
+                "My dearest...
+                you are my everything."
+
+            </p>
+
+
+            <button
+                class="btn"
+                onclick="nextStep(7)">
+
+                One Last Question... ✨
+
+            </button>
+
         </div>
 
-        <!-- Step 6: Proposal -->
-        <div class="step" id="step6">
-            <div class="emoji-icon">🌹</div>
-            <h2>Will You Be Mine? ❤️</h2>
+
+        <!-- ================================= -->
+        <!-- STEP 7 - PROPOSAL -->
+        <!-- ================================= -->
+
+        <div
+            class="step"
+            id="step7">
+
+            <div class="emoji-icon">
+                🌹
+            </div>
+
+            <h2>
+                Will You Be Mine? ❤️
+            </h2>
+
+
             <div class="yes-no-buttons">
-                <button class="btn" onclick="celebrate()">YES! 💖</button>
-                <button class="btn" id="noBtn" onmouseover="moveNoButton()" ontouchstart="moveNoButton()" onclick="moveNoButton()">NO 😜</button>
+
+                <button
+                    class="btn"
+                    onclick="celebrate()">
+
+                    YES! 💖
+
+                </button>
+
+
+                <button
+                    class="btn"
+                    id="noBtn"
+                    onmouseover="moveNoButton()"
+                    ontouchstart="moveNoButton()"
+                    onclick="moveNoButton()">
+
+                    NO 😜
+
+                </button>
+
             </div>
+
         </div>
 
-        <!-- Step 7: Celebration -->
-        <div class="step" id="step7">
-            <div class="emoji-icon">🎉🎆💕</div>
-            <h1>Yay! I Love You! ❤️</h1>
-            <p>Thank you for being in my life! 🥰</p>
+
+        <!-- ================================= -->
+        <!-- STEP 8 - CELEBRATION -->
+        <!-- ================================= -->
+
+        <div
+            class="step"
+            id="step8">
+
+            <div class="emoji-icon">
+
+                🎉🎆💕
+
+            </div>
+
+
+            <h1>
+
+                Yay!
+                <br>
+                I Love You! ❤️
+
+            </h1>
+
+
+            <div
+                class="success-name"
+                id="successName">
+
+            </div>
+
+
+            <p>
+
+                Thank you for being
+                in my life! 🥰
+
+                <br><br>
+
+                ❤️ Forever & Always ❤️
+
+            </p>
+
         </div>
+
 
     </div>
 
+
+    <!-- ================================= -->
+    <!-- JAVASCRIPT -->
+    <!-- ================================= -->
+
     <script>
-        // DOM Initialization
-        document.addEventListener('DOMContentLoaded', () => {
-            // Generate background floating hearts
-            const bgHearts = document.getElementById('bgHearts');
-            const heartEmojis = ['💖', '✨', '🌸', '💕', '❤️'];
-            
-            for (let i = 0; i < 15; i++) {
-                const heart = document.createElement('div');
-                heart.classList.add('bg-heart');
-                heart.innerText = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDuration = (Math.random() * 4 + 6) + 's';
-                heart.style.animationDelay = Math.random() * 5 + 's';
-                bgHearts.appendChild(heart);
+
+
+        /* =================================
+           PAGE INITIALIZATION
+        ================================= */
+
+        document.addEventListener(
+            'DOMContentLoaded',
+            function () {
+
+                const bgHearts =
+                    document.getElementById(
+                        'bgHearts'
+                    );
+
+                const heartEmojis = [
+                    '💖',
+                    '✨',
+                    '🌸',
+                    '💕',
+                    '❤️',
+                    '💗',
+                    '💞'
+                ];
+
+
+                for (
+                    let i = 0;
+                    i < 20;
+                    i++
+                ) {
+
+                    const heart =
+                        document.createElement(
+                            'div'
+                        );
+
+                    heart.classList.add(
+                        'bg-heart'
+                    );
+
+                    heart.innerText =
+                        heartEmojis[
+                            Math.floor(
+                                Math.random() *
+                                heartEmojis.length
+                            )
+                        ];
+
+                    heart.style.left =
+                        Math.random() * 100 +
+                        'vw';
+
+                    heart.style.animationDuration =
+                        (
+                            Math.random() * 4 +
+                            6
+                        ) + 's';
+
+                    heart.style.animationDelay =
+                        Math.random() * 5 +
+                        's';
+
+                    bgHearts.appendChild(
+                        heart
+                    );
+                }
+
+
+                /* Video ended */
+
+                const proposalVideo =
+                    document.getElementById(
+                        'myVideo'
+                    );
+
+                if (proposalVideo) {
+
+                    proposalVideo.addEventListener(
+                        'ended',
+                        function () {
+
+                            nextStep(6);
+
+                        }
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* =================================
+           START PROPOSAL
+        ================================= */
+
+        function startProposal() {
+
+            const nameInput =
+                document.getElementById(
+                    'personName'
+                );
+
+            const name =
+                nameInput.value.trim();
+
+
+            if (name === '') {
+
+                alert(
+                    'කරුණාකර ඔයාගේ නම ඇතුළත් කරන්න ❤️'
+                );
+
+                nameInput.focus();
+
+                return;
             }
 
-            // Auto-advance to Step 5 when video ends
-            const proposalVideo = document.getElementById('myVideo');
-            if (proposalVideo) {
-                proposalVideo.addEventListener('ended', () => {
-                    nextStep(5);
-                });
-            }
-        });
 
-        // Navigation between steps
-        function nextStep(stepNumber) {
+            /* Save Name */
+
+            localStorage.setItem(
+                'proposalName',
+                name
+            );
+
+
+            /* Show Name */
+
+            const successName =
+                document.getElementById(
+                    'successName'
+                );
+
+            if (successName) {
+
+                successName.innerText =
+                    '💖 ' + name + ' 💖';
+
+            }
+
+
             playClickSound();
 
-            // Hide all steps
-            document.querySelectorAll('.step').forEach(step => {
-                step.classList.remove('active');
-            });
 
-            // Activate current step
-            const currentStep = document.getElementById('step' + stepNumber);
+            nextStep(2);
+
+        }
+
+
+        /* =================================
+           NEXT STEP
+        ================================= */
+
+        function nextStep(stepNumber) {
+
+            playClickSound();
+
+
+            /* Hide all */
+
+            document
+                .querySelectorAll('.step')
+                .forEach(
+                    function (step) {
+
+                        step.classList.remove(
+                            'active'
+                        );
+
+                    }
+                );
+
+
+            /* Show selected */
+
+            const currentStep =
+                document.getElementById(
+                    'step' + stepNumber
+                );
+
+
             if (currentStep) {
-                currentStep.classList.add('active');
+
+                currentStep.classList.add(
+                    'active'
+                );
+
             }
 
-            // Video logic for Step 4
-            const video = document.getElementById('myVideo');
+
+            /* Video */
+
+            const video =
+                document.getElementById(
+                    'myVideo'
+                );
+
+
             if (video) {
-                if (stepNumber === 4) {
+
+                if (stepNumber === 5) {
+
                     video.currentTime = 0;
-                    video.play().catch(e => console.log("Autoplay blocked or failed:", e));
-                } else {
-                    video.pause();
+
+                    video.play().catch(
+                        function (error) {
+
+                            console.log(
+                                'Autoplay blocked:',
+                                error
+                            );
+
+                        }
+                    );
+
                 }
+
+                else {
+
+                    video.pause();
+
+                }
+
             }
+
         }
 
-        // 'NO' button එක මගහැර පැනීමට සකසා ඇති ආකාරය (Interactive detail)
+
+        /* =================================
+           TRUST METER
+        ================================= */
+
+        function updateTrust(val) {
+
+            document.getElementById(
+                'trustVal'
+            ).innerText = val;
+
+        }
+
+
+        /* =================================
+           NO BUTTON
+        ================================= */
+
         function moveNoButton() {
-            const noBtn = document.getElementById('noBtn');
-            const x = Math.random() * (window.innerWidth - 100);
-            const y = Math.random() * (window.innerHeight - 50);
-            noBtn.style.position = 'fixed';
-            noBtn.style.left = x + 'px';
-            noBtn.style.top = y + 'px';
+
+            playClickSound();
+
+
+            const noBtn =
+                document.getElementById(
+                    'noBtn'
+                );
+
+
+            const padding = 20;
+
+
+            const maxX =
+                window.innerWidth -
+                noBtn.offsetWidth -
+                padding;
+
+
+            const maxY =
+                window.innerHeight -
+                noBtn.offsetHeight -
+                padding;
+
+
+            const x =
+                Math.max(
+                    padding,
+                    Math.random() * maxX
+                );
+
+
+            const y =
+                Math.max(
+                    padding,
+                    Math.random() * maxY
+                );
+
+
+            noBtn.style.position =
+                'fixed';
+
+            noBtn.style.left =
+                x + 'px';
+
+            noBtn.style.top =
+                y + 'px';
+
         }
 
 
-        // Play Bubble Pop Sound Effect
+        /* =================================
+           CLICK SOUND
+        ================================= */
+
         function playClickSound() {
-            const sound = document.getElementById('bubblePopSound');
+
+            const sound =
+                document.getElementById(
+                    'bubblePopSound'
+                );
+
+
             if (sound) {
+
                 sound.currentTime = 0;
-                sound.play().catch(e => console.log('Sound play error:', e));
+
+                sound.play().catch(
+                    function (error) {
+
+                        console.log(
+                            'Sound error:',
+                            error
+                        );
+
+                    }
+                );
+
             }
+
         }
 
-        // Celebration Web Audio Synthesizer
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
+
+        /* =================================
+           CELEBRATION AUDIO
+        ================================= */
+
+        const AudioContext =
+            window.AudioContext ||
+            window.webkitAudioContext;
+
         let audioCtx = null;
 
+
         function playCelebrationSound() {
-            if (!audioCtx) audioCtx = new AudioContext();
-            if (audioCtx.state === 'suspended') audioCtx.resume();
 
-            const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51];
-            notes.forEach((freq, index) => {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
+            if (!audioCtx) {
 
-                osc.type = 'sine';
-                osc.frequency.value = freq;
+                audioCtx =
+                    new AudioContext();
 
-                const startTime = audioCtx.currentTime + (index * 0.08);
-                gain.gain.setValueAtTime(0.2, startTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.6);
-
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-
-                osc.start(startTime);
-                osc.stop(startTime + 0.6);
-            });
-        }
-
-        // Update Trust Range Meter
-        function updateTrust(val) {
-            document.getElementById('trustVal').innerText = val;
-        }
-
-        // Move NO button away smoothly
-        function moveNoButton() {
-            playClickSound();
-            const noBtn = document.getElementById('noBtn');
-            const padding = 20;
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - (padding * 2)) + padding;
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - (padding * 2)) + padding;
-            
-            noBtn.style.position = 'fixed';
-            noBtn.style.left = x + 'px';
-            noBtn.style.top = y + 'px';
-        }
-
-        // Celebration Logic
-        function celebrate() {
-            playClickSound();
-            playCelebrationSound();
-
-            document.body.classList.add('celebrate-bg');
-            nextStep(7);
-
-            // Trigger Confetti
-            var count = 200;
-            var defaults = { origin: { y: 0.7 } };
-
-            function fire(particleRatio, opts) {
-                if (typeof confetti === 'function') {
-                    confetti(Object.assign({}, defaults, opts, {
-                        particleCount: Math.floor(count * particleRatio)
-                    }));
-                }
             }
 
-            fire(0.25, { spread: 26, startVelocity: 55 });
-            fire(0.2, { spread: 60 });
-            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
-            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
-            fire(0.1, { spread: 120, startVelocity: 45 });
+
+            if (
+                audioCtx.state ===
+                'suspended'
+            ) {
+
+                audioCtx.resume();
+
+            }
+
+
+            const notes = [
+                523.25,
+                659.25,
+                783.99,
+                1046.50,
+                1318.51
+            ];
+
+
+            notes.forEach(
+                function (freq, index) {
+
+                    const osc =
+                        audioCtx.createOscillator();
+
+                    const gain =
+                        audioCtx.createGain();
+
+
+                    osc.type = 'sine';
+
+                    osc.frequency.value =
+                        freq;
+
+
+                    const startTime =
+                        audioCtx.currentTime +
+                        (index * 0.08);
+
+
+                    gain.gain.setValueAtTime(
+                        0.2,
+                        startTime
+                    );
+
+
+                    gain.gain.exponentialRampToValueAtTime(
+                        0.001,
+                        startTime + 0.6
+                    );
+
+
+                    osc.connect(gain);
+
+                    gain.connect(
+                        audioCtx.destination
+                    );
+
+
+                    osc.start(
+                        startTime
+                    );
+
+                    osc.stop(
+                        startTime + 0.6
+                    );
+
+                }
+            );
+
         }
+
+
+        /* =================================
+           CELEBRATION
+        ================================= */
+
+        function celebrate() {
+
+            playClickSound();
+
+            playCelebrationSound();
+
+
+            /* Change Background */
+
+            document.body.classList.add(
+                'celebrate-bg'
+            );
+
+
+            /* Get Name */
+
+            const name =
+                localStorage.getItem(
+                    'proposalName'
+                ) || 'Someone';
+
+
+            /* Get Trust */
+
+            const trust =
+                document.getElementById(
+                    'trustRange'
+                ).value;
+
+
+            /* Date & Time */
+
+            const now = new Date();
+
+
+            const dateTime =
+                now.toLocaleString(
+                    'en-GB',
+                    {
+                        dateStyle: 'medium',
+                        timeStyle: 'short'
+                    }
+                );
+
+
+            /* Show Success Page */
+
+            document
+                .querySelectorAll('.step')
+                .forEach(
+                    function (step) {
+
+                        step.classList.remove(
+                            'active'
+                        );
+
+                    }
+                );
+
+
+            document
+                .getElementById('step8')
+                .classList.add(
+                    'active'
+                );
+
+
+            document.getElementById(
+                'successName'
+            ).innerText =
+                '💖 ' + name + ' 💖';
+
+
+            /* =================================
+               WHATSAPP
+            ================================= */
+
+
+            /*
+                Sri Lanka number:
+
+                0706551814
+
+                WhatsApp format:
+
+                94706551814
+            */
+
+            const phoneNumber =
+                '94706551814';
+
+
+            const message =
+                '❤️ SPECIAL PROPOSAL RESPONSE ❤️\n\n' +
+
+                '👤 Name: ' +
+                name +
+                '\n' +
+
+                '💖 Answer: YES!\n' +
+
+                '🔒 Trust Level: ' +
+                trust +
+                '%\n' +
+
+                '📅 Date & Time: ' +
+                dateTime +
+                '\n\n' +
+
+                '🥰 ' +
+                name +
+                ' said YES! ❤️';
+
+
+            /*
+                Encode message
+                for WhatsApp
+            */
+
+            const whatsappURL =
+                'https://wa.me/' +
+                phoneNumber +
+                '?text=' +
+                encodeURIComponent(
+                    message
+                );
+
+
+            /*
+                Open WhatsApp
+            */
+
+            setTimeout(
+                function () {
+
+                    window.open(
+                        whatsappURL,
+                        '_blank'
+                    );
+
+                },
+                1500
+            );
+
+
+            /* =================================
+               CONFETTI
+            ================================= */
+
+            const count = 250;
+
+
+            const defaults = {
+
+                origin: {
+                    y: 0.7
+                }
+
+            };
+
+
+            function fire(
+                particleRatio,
+                opts
+            ) {
+
+                if (
+                    typeof confetti ===
+                    'function'
+                ) {
+
+                    confetti(
+                        Object.assign(
+                            {},
+                            defaults,
+                            opts,
+                            {
+                                particleCount:
+                                    Math.floor(
+                                        count *
+                                        particleRatio
+                                    )
+                            }
+                        )
+                    );
+
+                }
+
+            }
+
+
+            fire(
+                0.25,
+                {
+                    spread: 26,
+                    startVelocity: 55
+                }
+            );
+
+
+            fire(
+                0.20,
+                {
+                    spread: 60
+                }
+            );
+
+
+            fire(
+                0.35,
+                {
+                    spread: 100,
+                    decay: 0.91,
+                    scalar: 0.8
+                }
+            );
+
+
+            fire(
+                0.10,
+                {
+                    spread: 120,
+                    startVelocity: 25,
+                    decay: 0.92,
+                    scalar: 1.2
+                }
+            );
+
+
+            fire(
+                0.10,
+                {
+                    spread: 120,
+                    startVelocity: 45
+                }
+            );
+
+        }
+
     </script>
+
 </body>
 </html>
