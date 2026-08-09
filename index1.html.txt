@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Proposal ❤️</title>
+    <!-- Google Fonts for modern GenZ typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --primary: #ff2a5f;
+            --primary-glow: rgba(255, 42, 95, 0.4);
+            --bg-gradient: linear-gradient(135deg, #0f0c1b 0%, #2b102f 50%, #1a0826 100%);
+            --glass-bg: rgba(255, 255, 255, 0.07);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --text-main: #ffffff;
+            --text-sub: #e2c0db;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+            color: var(--text-main);
+        }
+
+        /* Floating background elements */
+        .bg-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .bg-heart {
+            position: absolute;
+            color: rgba(255, 42, 95, 0.15);
+            font-size: 24px;
+            animation: floatUp 8s infinite linear;
+            bottom: -50px;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
+            20% { opacity: 0.8; }
+            100% { transform: translateY(-110vh) rotate(360deg) scale(1.2); opacity: 0; }
+        }
+
+        /* Main Container - Glassmorphism */
+        .container {
+            width: 90%;
+            max-width: 420px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            padding: 35px 25px;
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4),
+                        0 0 40px rgba(255, 42, 95, 0.15);
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+            animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(20px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        h1, h2 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ff6b8b, #ff2a5f, #ff8da1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+        }
+
+        h1 { font-size: 1.8rem; }
+        h2 { font-size: 2rem; }
+
+        p {
+            color: var(--text-sub);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+
+        /* Modernized Buttons */
+        .btn {
+            background: linear-gradient(135deg, #ff2a5f 0%, #ff5e84 100%);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            margin: 5px;
+            box-shadow: 0 8px 20px var(--primary-glow);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 12px 25px rgba(255, 42, 95, 0.6);
+        }
+
+        .btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        /* Emojis & Visual Elements */
+        .emoji-icon {
+            font-size: 65px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+            animation: pulse 2s infinite ease-in-out;
+            display: inline-block;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Styled Range Input */
+        .range-wrapper {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            outline: none;
+            accent-color: #ff2a5f;
+            cursor: pointer;
+            margin: 15px 0;
+        }
+
+        .trust-badge {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ff6b8b;
+        }
+
+        /* Video Frame */
+        .video-wrapper {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin-bottom: 20px;
+            border: 1px solid var(--glass-border);
+        }
+
+        video {
+            width: 100%;
+            display: block;
+        }
+
+        .yes-no-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            min-height: 60px;
+            margin-top: 10px;
+        }
+
+        #noBtn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ccc;
+            box-shadow: none;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Floating Background Hearts -->
+    <div class="bg-hearts" id="bgHearts"></div>
+
+    <div class="container">
+        
+        <!-- Step 1: Intro -->
+        <div class="step active" id="step1">
+            <div class="emoji-icon">✨</div>
+            <h1>හේයි... ❤️</h1>
+            <p>"මට ඔයාට කියන්න පුංචි දෙයක් තියෙනවා... මේක අන්තිම වෙනකන් බලන්න Promise වෙන්න. 🥺"</p>
+            <button class="btn" onclick="nextStep(2)">Promise! 💖</button>
+        </div>
+
+        <!-- Step 2: Teddy Hug -->
+        <div class="step" id="step2">
+            <div class="emoji-icon">🧸</div>
+            <p>Before we continue...<br>මුලින්ම මේ Teddy ට Hug එකක් දෙන්න.</p>
+            <button class="btn" onclick="nextStep(3)">Give Hug 🧸💞</button>
+        </div>
+
+        <!-- Step 3: Trust Meter -->
+        <div class="step" id="step3">
+            <div class="emoji-icon">🔒💗</div>
+            <p>ඔයා මාව කොච්චර විශ්වාස කරනවද කියලා මේකෙන් පෙන්වන්න.</p>
+            <div class="range-wrapper">
+                <input type="range" id="trustRange" min="0" max="100" value="50" oninput="updateTrust(this.value)">
+                <div class="trust-badge"><span id="trustVal">50</span>%</div>
+            </div>
+            <button class="btn" onclick="nextStep(4)">Continue ✨</button>
+        </div>
+
+        <!-- Step 4: Video Section -->
+        <div class="step" id="step4">
+            <p style="margin-bottom: 10px;">❤️ A little moment for us ❤️</p>
+            <div class="video-wrapper">
+                <video controls autoplay muted loop>
+                    <source src="your-vdo.mp4" type="video/mp4">
+                    Your browser does not support video.
+                </video>
+            </div>
+            <p>Watch till the end, then continue 🌹</p>
+            <button class="btn" onclick="nextStep(5)">Next Step ➡️</button>
+        </div>
+
+        <!-- Step 5: Love Message -->
+        <div class="step" id="step5">
+            <div class="emoji-icon">💌</div>
+            <p>"My dearest... you are my everything."</p>
+            <button class="btn" onclick="nextStep(6)">One Last Question... ✨</button>
+        </div>
+
+        <!-- Step 6: Proposal -->
+        <div class="step" id="step6">
+            <div class="emoji-icon">🌹</div>
+            <h2>Will You Be Mine? ❤️</h2>
+            <div class="yes-no-buttons">
+                <button class="btn" onclick="celebrate()">YES! 💖</button>
+                <button class="btn" id="noBtn" onmouseover="moveNoButton()" onclick="moveNoButton()">NO 😜</button>
+            </div>
+        </div>
+
+        <!-- Step 7: Celebration -->
+        <div class="step" id="step7">
+            <div class="emoji-icon">🎉🎆💕</div>
+            <h1>Yay! I Love You! ❤️</h1>
+            <p>Thank you for being in my life! 🥰</p>
+        </div>
+
+    </div>
+
+    <script>
+        // Web Audio API Engine for zero-dependency sound effects
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new AudioContext();
+            }
+        }
+
+        // Play soft romantic tap sound for step buttons
+        function playClickSound() {
+            initAudio();
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5 note
+            osc.frequency.exponentialRampToValueAtTime(659.25, audioCtx.currentTime + 0.08); // E5 note
+
+            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.12);
+        }
+
+        // Play magical romantic chime for the proposal YES
+        function playCelebrationSound() {
+            initAudio();
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51]; // C5, E5, G5, C6, E6
+            notes.forEach((freq, index) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.value = freq;
+
+                const startTime = audioCtx.currentTime + (index * 0.08);
+                gain.gain.setValueAtTime(0.2, startTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.6);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start(startTime);
+                osc.stop(startTime + 0.6);
+            });
+        }
+
+        // Generate floating background hearts dynamically
+        const bgHearts = document.getElementById('bgHearts');
+        const heartEmojis = ['💖', '✨', '🌸', '💕', '❤️'];
+        
+        for (let i = 0; i < 15; i++) {
+            const heart = document.createElement('div');
+            heart.classList.add('bg-heart');
+            heart.innerText = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 4 + 6) + 's';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            bgHearts.appendChild(heart);
+        }
+
+        function nextStep(stepNumber) {
+            playClickSound();
+            document.querySelectorAll('.step').forEach(step => {
+                step.classList.remove('active');
+            });
+            document.getElementById('step' + stepNumber).classList.add('active');
+        }
+
+        function updateTrust(val) {
+            document.getElementById('trustVal').innerText = val;
+        }
+
+        function moveNoButton() {
+            playClickSound();
+            const noBtn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - 120);
+            const y = Math.random() * (window.innerHeight - 60);
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        }
+
+        function celebrate() {
+            playCelebrationSound();
+            nextStep(7);
+            
+            // Confetti effect on saying YES
+            var count = 200;
+            var defaults = { origin: { y: 0.7 } };
+
+            function fire(particleRatio, opts) {
+                confetti(Object.assign({}, defaults, opts, {
+                    particleCount: Math.floor(count * particleRatio)
+                }));
+            }
+
+            fire(0.25, { spread: 26, startVelocity: 55 });
+            fire(0.2, { spread: 60 });
+            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+            fire(0.1, { spread: 120, startVelocity: 45 });
+        }
+    </script>
+</body>
+</html>
